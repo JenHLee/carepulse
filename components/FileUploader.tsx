@@ -11,13 +11,16 @@ type FileUploaderProps = {
 };
 
 const FileUploader = ({ files, onChange }: FileUploaderProps) => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
     onChange(acceptedFiles);
-  }, []);
+  }, [onChange]);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} className="file-upload">
+    <div {...getRootProps()} className={`file-upload ${isDragActive ? "drag-active" : ""}`}>
+      <input {...getInputProps()} />
       {files && files?.length > 0 ? (
         <Image
           src={convertFileToUrl(files[0])}
