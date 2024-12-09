@@ -193,7 +193,7 @@ const AppointmentForm = ({
                 fieldType={FormFieldType.TEXTAREA}
                 control={form.control}
                 name="note"
-                label="Additional comments/notes"
+                label="Additional notes"
                 placeholder="Enter notes"
               />
             </div>
