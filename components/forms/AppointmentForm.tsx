@@ -30,7 +30,7 @@ const AppointmentForm = ({
   patientId: string;
   type: "create" | "cancel" | "schedule";
   appointment?: Appointment;
-  setOepn: (open: boolean) => void;
+  setOpen: (open: boolean) => void;
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -42,9 +42,11 @@ const AppointmentForm = ({
     defaultValues: {
       primaryPhysician: appointment && appointment.primaryPhysician,
       schedule: appointment ? new Date(appointment.schedule) : new Date(),
-      reason: appointment? appointment.reason : "",
-      note: appointment? appointment.note : "",
-      cancellationReason: appointment? appointment.cancellationReason || "" : "",
+      reason: appointment ? appointment.reason : "",
+      note: appointment ? appointment.note : "",
+      cancellationReason: appointment
+        ? appointment.cancellationReason || ""
+        : "",
     },
   });
 
@@ -57,12 +59,14 @@ const AppointmentForm = ({
         status = "scheduled";
         break;
       case "cancel":
-        status = "canceled";
+        status = "cancelled";
         break;
       default:
         status = "pending";
         break;
     }
+
+    // console.log("type: ", type);
     try {
       if (type === "create" && patientId) {
         const appointmentData = {
@@ -76,6 +80,7 @@ const AppointmentForm = ({
         };
         const appointment = await createAppointment(appointmentData);
 
+        
         if (appointment) {
           form.reset();
           router.push(
@@ -83,6 +88,7 @@ const AppointmentForm = ({
           );
         }
       } else {
+        console.log("Appointment From's appointment: ", appointment);
         const appointmentToUpdate = {
           userId,
           appointmentId: appointment?.$id!,
@@ -96,15 +102,18 @@ const AppointmentForm = ({
         };
 
         const updatedAppointment = await updateAppointment(appointmentToUpdate);
+        console.log("updatedAppointment: ", updateAppointment);
 
         if (updatedAppointment) {
+          console.log("Updated successfully, closing modal.");
           setOpen && setOpen(false);
           form.reset();
-        }
+        } 
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error updating appointment: ", error);
     }
+
     setIsLoading(false);
   }
 

@@ -79,7 +79,7 @@ export const getRecentAppointmentList = async () => {
     }
 }
 
-export const updateAppointment = async ({appointmentId, userId, appointment, type}: UpdateAppointmentParams) => {
+export const updateAppointment = async ({ appointmentId, userId, appointment, type }: UpdateAppointmentParams) => {
     try {
         const updatedAppointment = await databases.updateDocument(
             DATABASE_ID!,
@@ -95,7 +95,9 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
         // SMS notification
 
         revalidatePath('/admin');
-        return parseStringify(updateAppointment)
+
+        // Pass the updated appointment data to parseStringify, not the function
+        return parseStringify(updatedAppointment)
     } catch (error) {
         console.log(error)
     }
