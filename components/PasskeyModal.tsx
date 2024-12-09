@@ -46,7 +46,6 @@ const PasskeyModal = () => {
   }, [encryptedKey]);
 
   const validatePasskey = (
-    
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();

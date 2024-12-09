@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { redirect } from "next/navigation";
 
 import RegisterForm from "@/components/forms/RegisterForm";
 import { getUser } from "@/app/lib/actions/patient.actions";

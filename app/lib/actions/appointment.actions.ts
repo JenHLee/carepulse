@@ -35,7 +35,6 @@ export const getAppointment = async (appointmentId: string) => {
 
     } catch (error) {
         console.log(error);
-
     }
 }
 
@@ -76,7 +75,7 @@ export const getRecentAppointmentList = async () => {
         return parseStringify(data);
 
     } catch (error) {
-
+        console.log(error);
     }
 }
 
